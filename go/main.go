@@ -151,3 +151,29 @@ func tambah (uuid string, namaLengkap string, domisili string, createdAt string)
 		Data: []tamu{}
 	}
 }
+
+//fungsi untuk mengubah data tamu
+func ubah (uuid string, namaLengkap string, domisili string, updatedAt string) response{
+	db, err := koneksi()
+	if err != nill {
+		return response{
+			Status: false,
+			Pesan: "Gagal koneksi: "+err.Error(),
+			Data: []tamu{}
+		}
+	}
+	defer db.Close()
+	_, err := db.Query("UPDATE `tamu` SET `nama_lengkap`=?,`domisili`=?,`updated_at`=? WHERE uuid=?", namaLengkap,domisili,updatedAt,uuid)
+	if err != nill {
+		return response{
+			Status: false,
+			Pesan: "Query update error: "+err.Error(),
+			Data: []tamu{}
+		}
+	}
+	return response{
+		Status: true,
+		Pesan: "Berhasil ubah data tamu "+uuid,
+		Data: []tamu{}
+	}
+}
