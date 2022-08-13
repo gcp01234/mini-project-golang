@@ -86,7 +86,7 @@ func tampil (pesan string) response{
 
 
 //fungsi untuk menampilkan data tamu berdasarkan Uuid
-func tampilFilterBerdasarkanUuid (pesan string, uuid string) response{
+func tampilFilterBerdasarkanUuid (uuid string) response{
 	db, err := koneksi()
 	if err != nil {
 		return response{
@@ -120,7 +120,7 @@ func tampilFilterBerdasarkanUuid (pesan string, uuid string) response{
 	}
 	return response{
 		Status: true,
-		Pesan: pesan,
+		Pesan: "Berhasil tampilkan data tamu!",
 		Data: hasil
 	}
 	
@@ -227,5 +227,28 @@ func kontroler (w http.ResponseWriter, r *http.Request){
 		fmt.Println(err4.Error())
 		return nil
 	}
+
+	switch r.Method {
+		case "GET":
+			aksi := r.URL.Query()["aksi"]
+			if (len(aksi)==0) {
+				tampilHtml.Execute(w, tampil("Berhasil tampilkan semua data!"))
+			}else if aksi[0] == "tambah" {
+				tambahHtml.Execute(w, nil)
+			}else if aksi[0] == "ubah" {
+				uuid := r.URL.Query()["uuid"]
+				ubahHtml.Execute(w, tampilFilterBerdasarkanUuid (uuid))
+			} else if aksi[0] == "hapus" {
+				uuid := r.URL.Query()["uuid"]
+				hapusHtml.Execute(w, tampilFilterBerdasarkanUuid (uuid))
+			} else{
+				tampilHtml.Execute(w, tampil("Berhasil tampilkan semua data!"))
+			}
+		case "POST":
+			
+		default:
+			fmt.Fprint(w,"Maaf, Method yang di dukung hanya GET dan POST!")
+	}
+
 
 }
