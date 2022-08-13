@@ -15,8 +15,9 @@ import (
 )
 
 func main(){
-
-	fmt.Println("Cek.")
+	http.HandleFunc("/",kontroler)
+	fmt.Println("Server berjalan di port 8080 ...")
+	http.ListenAndServe(":8080",nil)
 
 }
 
