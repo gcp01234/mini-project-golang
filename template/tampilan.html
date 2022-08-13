@@ -1,0 +1,38 @@
+<html>
+    <body>
+        <h1>Daftar Tamu</h1>
+        <p>{{.Pesan}}</p>
+        <a href="/?aksi=tambah"> Tambah </a>
+        <table>
+            <thead>
+                <tr>
+                    <th>UUID</th>
+                    <th>Nama Lengkap</th>
+                    <th>Domisili</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{ range $key, $value := .Data}}
+                <tr>
+                    <td>{{$value.Uuid}}</td>
+                    <td>{{$value.NamaLengkap}}</td>
+                    <td>{{$value.Domisili}}</td>
+                    <td>
+                        <a href="/?aksi=ubah&uuid={{$value.Uuid}}">Ubah</a> |
+                        <a href="/?aksi=hapus&uuid={{$value.Uuid}}">Hapus</a>
+                    </td>
+                </tr>
+                {{end}}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>No</th>
+                    <th>Nama Lengkap</th>
+                    <th>Domisili</th>
+                    <th>Aksi</th>
+                </tr>
+            </tfoot>
+        </table>
+    </body>
+</html>
