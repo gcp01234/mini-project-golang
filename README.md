@@ -1,5 +1,5 @@
-Nama Proyek: Mini Project Golang 
-Pembuat: Gita Citra Puspita
+Nama Proyek: Mini Project Golang <br>
+Pembuat: Gita Citra Puspita <br>
 Deksripsi: Tugas ini dibuat untuk memenuhi kewajiban dalam mengikuti pelatihan PROA Digitalent Kelas Golang
 
 # Struktur Proyek
@@ -27,3 +27,6 @@ File utama program golang berisi fungsi tampilkan semua data, tampilkan data ber
 8. Jalankan dengan perintah go run main.go.
 9. Akses localhost port 8080.
 10. Selesai
+
+#Demo Aplikasi
+<img src="demo/demo.gif">
