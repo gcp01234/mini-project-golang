@@ -125,3 +125,29 @@ func tampilFilterBerdasarkanUuid (pesan string, uuid string) response{
 	}
 	
 }
+
+//fungsi untuk menambahkan data tamu
+func tambah (uuid string, namaLengkap string, domisili string, createdAt string) response{
+	db, err := koneksi()
+	if err != nill {
+		return response{
+			Status: false,
+			Pesan: "Gagal koneksi: "+err.Error(),
+			Data: []tamu{}
+		}
+	}
+	defer db.Close()
+	_, err := db.Query("INSERT INTO `tamu`(`uuid`, `nama_lengkap`, `domisili`, `created_at`, `updated_at`) VALUES (?,?,?,?)",uuid, namaLengkap,domisili,createdAt)
+	if err != nill {
+		return response{
+			Status: false,
+			Pesan: "Query insert error: "+err.Error(),
+			Data: []tamu{}
+		}
+	}
+	return response{
+		Status: true,
+		Pesan: "Berhasil tambah data tamu "+namaLengkap,
+		Data: []tamu{}
+	}
+}
