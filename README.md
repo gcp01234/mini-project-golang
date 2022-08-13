@@ -28,5 +28,5 @@ File utama program golang berisi fungsi tampilkan semua data, tampilkan data ber
 9. Akses localhost port 8080.
 10. Selesai
 
-#Demo Aplikasi
+# Demo Aplikasi
 <img src="demo/demo.gif">
