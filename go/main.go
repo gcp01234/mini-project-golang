@@ -203,3 +203,29 @@ func hapus (uuid string) response{
 	}
 }
 
+func kontroler (w http.ResponseWriter, r *http.Request){
+	var tampilHtml, err1 = template.ParseFiles("template/tampil.html")
+	if err1 != nil{
+		fmt.Println(err1.Error())
+		return nil
+	}
+
+	var tambahHtml, err2 = template.ParseFiles("template/tambah.html")
+	if err2 != nil{
+		fmt.Println(err2.Error())
+		return nil
+	}
+
+	var ubahHtml, err3 = template.ParseFiles("template/ubah.html")
+	if err3 != nil{
+		fmt.Println(err3.Error())
+		return nil
+	}
+
+	var hapusHtml, err4 = template.ParseFiles("template/hapus.html")
+	if err4 != nil{
+		fmt.Println(err4.Error())
+		return nil
+	}
+
+}
