@@ -1,0 +1,31 @@
+<html>
+    <body>
+        <h1>Form Ubah Data Tamu</h1>
+        <a href="/"> Batal </a>
+        <hr>
+        <form method="POST" action="/ubah">
+            <table>
+                <tbody>
+                    <tr>
+                        <td>UUID</td>
+                        <td>:</td>
+                        <td><input type="text" name="uuid" value="{{ ( index .Data 0 ).Uuid }}" readonly=""readonly></td>
+                    </tr>
+                    <tr>
+                        <td>Nama Lengkap</td>
+                        <td>:</td>
+                        <td><input type="text" name="namaLengkap" value="{{ ( index .Data 0 ).NamaLengkap }}" ></td>
+                    </tr>
+                    <tr>
+                        <td>Domisili</td>
+                        <td>:</td>
+                        <td><input type="text" name="domisili" value="{{ ( index .Data 0 ).Domisili }}" ></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"><input type="submit" value="Ubah"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </body>
+</html>
