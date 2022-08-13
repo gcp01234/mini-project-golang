@@ -1,11 +1,16 @@
 <html>
     <head>
         <title>Daftar Tamu Undangan</title>
+        <link rel="stylesheet" href="assets/css/style.css">
+        <link rel="stylesheet" href="assets/css/responsive.css">
     </head>
     <body>
-        <h1>Daftar Tamu</h1>
-        <p>{{.Pesan}}</p>
-        <a href="/?aksi=tambah"> Tambah </a>
+        <h1>Daftar Hadir Tamu Undangan</h1>
+        <div class="alert">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+            <img src="assets/img/info.png"> {{.Pesan}}
+        </div>
+        <a class="btn add" href="/?aksi=tambah"> <img src="assets/img/add.png"> Tambah </a>
         <table>
             <thead>
                 <tr>
@@ -18,12 +23,12 @@
             <tbody>
                 {{ range $key, $value := .Data}}
                 <tr>
-                    <td>{{$value.Id}}</td>
-                    <td>{{$value.NamaLengkap}}</td>
-                    <td>{{$value.Domisili}}</td>
-                    <td>
-                        <a href="/?aksi=ubah&id={{$value.Id}}">Ubah</a> |
-                        <a href="/?aksi=hapus&id={{$value.Id}}">Hapus</a>
+                    <td class="center" style="width: 10%;">{{$value.Id}}</td>
+                    <td style="width: 35%;">{{$value.NamaLengkap}}</td>
+                    <td style="width: 30%;">{{$value.Domisili}}</td>
+                    <td class="center" style="width: 25%;">
+                        <a class="btn delete" href="/?aksi=hapus&id={{$value.Id}}"><img src="assets/img/delete.png"> Hapus</a>
+                        <a class="btn edit" href="/?aksi=ubah&id={{$value.Id}}"><img src="assets/img/edit.png"> Ubah</a>
                     </td>
                 </tr>
                 {{end}}

@@ -16,6 +16,8 @@ import (
 )
 
 func main(){
+	fs := http.FileServer(http.Dir("assets"))
+	http.Handle("/assets/",http.StripPrefix("/assets",fs))
 	http.HandleFunc("/",kontroler)
 	fmt.Println("Server berjalan di port 8080 ...")
 	http.ListenAndServe(":8080",nil)
