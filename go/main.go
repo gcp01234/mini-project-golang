@@ -177,3 +177,28 @@ func ubah (uuid string, namaLengkap string, domisili string, updatedAt string) r
 		Data: []tamu{}
 	}
 }
+
+func hapus (uuid string) response{
+	db, err := koneksi()
+	if err != nill {
+		return response{
+			Status: false,
+			Pesan: "Gagal koneksi: "+err.Error(),
+			Data: []tamu{}
+		}
+	}
+	defer db.Close()
+	_, err := db.Query("DELETE FROM `tamu` WHERE uuid=?", uuid)
+	if err != nill {
+		return response{
+			Status: false,
+			Pesan: "Query delete error: "+err.Error(),
+			Data: []tamu{}
+		}
+	}
+	return response{
+		Status: true,
+		Pesan: "Berhasil hapus data tamu "+uuid,
+		Data: []tamu{}
+	}
+}
