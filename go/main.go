@@ -44,3 +44,43 @@ func koneksi() (*sql.DB, error){
 	return db, nill
 }
 
+//fungsi untuk menampilkan semua data tamu
+func tampil (pesan string) response{
+	db, err := koneksi()
+	if err != nill {
+		return response{
+			Status: false,
+			Pesan: "Gagal koneksi: "+err.Error(),
+			Data: []tamu{}
+		}
+	}
+	defer db.Close()
+	dataTamu, err := db.Query("SELECT * FROM `tamu`")
+	if err != nill {
+		return response{
+			Status: false,
+			Pesan: "Query error: "+err.Error(),
+			Data: []tamu{}
+		}
+	}
+	defer dataTamu.Close()
+	var hasil []tamu
+	for dataTamu.Next(){
+		var tm = tamu{}
+		var err = dataTamu.Scan(&tm.Uuid,&tm.NamaLengkap,&tm.Domisili,&tm.CreatedAt,&tm.UpdatedAt)
+		if err != nill {
+			return response{
+				Status: false,
+				Pesan: "Gagal baca data: "+err.Error(),
+				Data: []tamu{}
+			}
+		}
+		hasil = append(hasil, tm)
+	}
+	return response{
+		Status: true,
+		Pesan: pesan,
+		Data: hasil
+	}
+}
+
