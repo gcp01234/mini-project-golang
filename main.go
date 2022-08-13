@@ -238,10 +238,10 @@ func kontroler (w http.ResponseWriter, r *http.Request){
 				tambahHtml.Execute(w, nil)
 			}else if aksi[0] == "ubah" {
 				uuid := r.URL.Query()["uuid"]
-				ubahHtml.Execute(w, tampilFilterBerdasarkanUuid (uuid))
+				ubahHtml.Execute(w, tampilFilterBerdasarkanUuid (uuid[0]))
 			} else if aksi[0] == "hapus" {
 				uuid := r.URL.Query()["uuid"]
-				hapusHtml.Execute(w, tampilFilterBerdasarkanUuid (uuid))
+				hapusHtml.Execute(w, tampilFilterBerdasarkanUuid (uuid[0]))
 			} else{
 				tampilHtml.Execute(w, tampil("Berhasil tampilkan semua data!"))
 			}
