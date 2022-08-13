@@ -9,7 +9,7 @@
         <table>
             <thead>
                 <tr>
-                    <th>UUID</th>
+                    <th>Id</th>
                     <th>Nama Lengkap</th>
                     <th>Domisili</th>
                     <th>Aksi</th>
@@ -18,12 +18,12 @@
             <tbody>
                 {{ range $key, $value := .Data}}
                 <tr>
-                    <td>{{$value.Uuid}}</td>
+                    <td>{{$value.Id}}</td>
                     <td>{{$value.NamaLengkap}}</td>
                     <td>{{$value.Domisili}}</td>
                     <td>
-                        <a href="/?aksi=ubah&uuid={{$value.Uuid}}">Ubah</a> |
-                        <a href="/?aksi=hapus&uuid={{$value.Uuid}}">Hapus</a>
+                        <a href="/?aksi=ubah&id={{$value.Id}}">Ubah</a> |
+                        <a href="/?aksi=hapus&id={{$value.Id}}">Hapus</a>
                     </td>
                 </tr>
                 {{end}}

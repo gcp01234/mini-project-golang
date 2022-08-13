@@ -8,6 +8,7 @@ package main
 
 import (
 	"fmt"
+	"strconv"
 	"net/http"
 	"html/template"
 	"database/sql"
@@ -22,7 +23,7 @@ func main(){
 
 //struktur data tabel tamu
 type tamu struct{
-	Uuid string
+	Id int
 	NamaLengkap string
 	Domisili string
 }
@@ -53,7 +54,7 @@ func tampil (pesan string) response{
 		}
 	}
 	defer db.Close()
-	dataTamu, err := db.Query("SELECT uuid, nama_lengkap, domisili FROM `tamu`")
+	dataTamu, err := db.Query("SELECT id, nama_lengkap, domisili FROM `tamu`")
 	if err != nil {
 		return response{
 			Status: false,
@@ -65,7 +66,7 @@ func tampil (pesan string) response{
 	var hasil []tamu
 	for dataTamu.Next(){
 		var tm = tamu{}
-		var err = dataTamu.Scan(&tm.Uuid,&tm.NamaLengkap,&tm.Domisili)
+		var err = dataTamu.Scan(&tm.Id,&tm.NamaLengkap,&tm.Domisili)
 		if err != nil {
 			return response{
 				Status: false,
@@ -83,8 +84,8 @@ func tampil (pesan string) response{
 }
 
 
-//fungsi untuk menampilkan data tamu berdasarkan Uuid
-func tampilFilterBerdasarkanUuid (uuid string) response{
+//fungsi untuk menampilkan data tamu berdasarkan Id
+func tampilFilterBerdasarkanId (id int) response{
 	db, err := koneksi()
 	if err != nil {
 		return response{
@@ -94,7 +95,7 @@ func tampilFilterBerdasarkanUuid (uuid string) response{
 		}
 	}
 	defer db.Close()
-	dataTamu, err := db.Query("SELECT uuid, nama_lengkap, domisili FROM `tamu` WHERE Uuid=?",uuid)
+	dataTamu, err := db.Query("SELECT id, nama_lengkap, domisili FROM `tamu` WHERE Uuid=?",id)
 	if err != nil {
 		return response{
 			Status: false,
@@ -106,11 +107,11 @@ func tampilFilterBerdasarkanUuid (uuid string) response{
 	var hasil []tamu
 	for dataTamu.Next(){
 		var tm = tamu{}
-		var err = dataTamu.Scan(&tm.Uuid,&tm.NamaLengkap,&tm.Domisili)
+		var err = dataTamu.Scan(&tm.Id,&tm.NamaLengkap,&tm.Domisili)
 		if err != nil {
 			return response{
 				Status: false,
-				Pesan: "Gagal baca data tamu dengan Uuid "+uuid+ " :"+err.Error(),
+				Pesan: "Gagal baca data tamu dengan Id "+string(id)+ " :"+err.Error(),
 				Data: []tamu{},
 			}
 		}
@@ -125,7 +126,7 @@ func tampilFilterBerdasarkanUuid (uuid string) response{
 }
 
 //fungsi untuk menambahkan data tamu
-func tambah (uuid string, namaLengkap string, domisili string) response{
+func tambah (namaLengkap string, domisili string) response{
 	db, err := koneksi()
 	if err != nil {
 		return response{
@@ -135,7 +136,7 @@ func tambah (uuid string, namaLengkap string, domisili string) response{
 		}
 	}
 	defer db.Close()
-	_, err = db.Query("INSERT INTO `tamu`(`uuid`, `nama_lengkap`, `domisili`) VALUES (?,?,?)",uuid, namaLengkap,domisili)
+	_, err = db.Query("INSERT INTO `tamu`( `nama_lengkap`, `domisili`) VALUES (?,?)", namaLengkap,domisili)
 	if err != nil {
 		return response{
 			Status: false,
@@ -151,7 +152,7 @@ func tambah (uuid string, namaLengkap string, domisili string) response{
 }
 
 //fungsi untuk mengubah data tamu
-func ubah (uuid string, namaLengkap string, domisili string) response{
+func ubah (id int, namaLengkap string, domisili string) response{
 	db, err := koneksi()
 	if err != nil {
 		return response{
@@ -161,7 +162,7 @@ func ubah (uuid string, namaLengkap string, domisili string) response{
 		}
 	}
 	defer db.Close()
-	_, err = db.Query("UPDATE `tamu` SET `nama_lengkap`=?,`domisili`=? WHERE uuid=?", namaLengkap,domisili,uuid)
+	_, err = db.Query("UPDATE `tamu` SET `nama_lengkap`=?,`domisili`=? WHERE id=?", namaLengkap,domisili,id)
 	if err != nil {
 		return response{
 			Status: false,
@@ -171,12 +172,12 @@ func ubah (uuid string, namaLengkap string, domisili string) response{
 	}
 	return response{
 		Status: true,
-		Pesan: "Berhasil ubah data tamu "+uuid,
+		Pesan: "Berhasil ubah data tamu "+string(id),
 		Data: []tamu{},
 	}
 }
 
-func hapus (uuid string) response{
+func hapus (id int) response{
 	db, err := koneksi()
 	if err != nil {
 		return response{
@@ -186,7 +187,7 @@ func hapus (uuid string) response{
 		}
 	}
 	defer db.Close()
-	_, err = db.Query("DELETE FROM `tamu` WHERE uuid=?", uuid)
+	_, err = db.Query("DELETE FROM `tamu` WHERE id=?", id)
 	if err != nil {
 		return response{
 			Status: false,
@@ -196,7 +197,7 @@ func hapus (uuid string) response{
 	}
 	return response{
 		Status: true,
-		Pesan: "Berhasil hapus data tamu "+uuid,
+		Pesan: "Berhasil hapus data tamu "+string(id),
 		Data: []tamu{},
 	}
 }
@@ -234,11 +235,13 @@ func kontroler (w http.ResponseWriter, r *http.Request){
 			}else if aksi[0] == "tambah" {
 				tambahHtml.Execute(w, nil)
 			}else if aksi[0] == "ubah" {
-				uuid := r.URL.Query()["uuid"]
-				ubahHtml.Execute(w, tampilFilterBerdasarkanUuid (uuid[0]))
+				id := r.URL.Query()["id"]
+				i, _ := strconv.Atoi(id[0])
+				ubahHtml.Execute(w, tampilFilterBerdasarkanId (i))
 			} else if aksi[0] == "hapus" {
-				uuid := r.URL.Query()["uuid"]
-				hapusHtml.Execute(w, tampilFilterBerdasarkanUuid (uuid[0]))
+				id := r.URL.Query()["id"]
+				i ,_ := strconv.Atoi(id[0])
+				hapusHtml.Execute(w, tampilFilterBerdasarkanId (i))
 			} else{
 				tampilHtml.Execute(w, tampil("Berhasil tampilkan semua data!"))
 			}
@@ -248,18 +251,19 @@ func kontroler (w http.ResponseWriter, r *http.Request){
 				fmt.Fprint(w,"Maaf, terjadi kesalahan: ", err)
 				return
 			}
-			var uuid string = r.FormValue("uuid")
+			var id string = r.FormValue("id")
+			i,_ := strconv.Atoi(id)
 			var namaLengkap string = r.FormValue("namaLengkap")
 			var domisili string = r.FormValue("domisili")
 			var aksi = r.URL.Path
 			if aksi == "/tambah"{
-				var hasil = tambah(uuid,namaLengkap,domisili)
+				var hasil = tambah(namaLengkap,domisili)
 				tampilHtml.Execute(w, tampil(hasil.Pesan))
 			} else if aksi == "/ubah" {
-				var hasil = ubah(uuid,namaLengkap,domisili)
+				var hasil = ubah(i,namaLengkap,domisili)
 				tampilHtml.Execute(w, tampil(hasil.Pesan))
 			}else if aksi == "/hapus" {
-				var hasil = hapus(uuid)
+				var hasil = hapus(i)
 				tampilHtml.Execute(w, tampil(hasil.Pesan))
 			}else{
 				tampilHtml.Execute(w, tampil("Berhasil tampilkan semua data!"))
