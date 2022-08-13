@@ -52,7 +52,7 @@ func tampil (pesan string) response{
 		return response{
 			Status: false,
 			Pesan: "Gagal koneksi: "+err.Error(),
-			Data: []tamu{}
+			Data: []tamu{},
 		}
 	}
 	defer db.Close()
@@ -61,7 +61,7 @@ func tampil (pesan string) response{
 		return response{
 			Status: false,
 			Pesan: "Query error: "+err.Error(),
-			Data: []tamu{}
+			Data: []tamu{},
 		}
 	}
 	defer dataTamu.Close()
@@ -73,7 +73,7 @@ func tampil (pesan string) response{
 			return response{
 				Status: false,
 				Pesan: "Gagal baca data: "+err.Error(),
-				Data: []tamu{}
+				Data: []tamu{},
 			}
 		}
 		hasil = append(hasil, tm)
@@ -81,7 +81,7 @@ func tampil (pesan string) response{
 	return response{
 		Status: true,
 		Pesan: pesan,
-		Data: hasil
+		Data: hasil,
 	}
 }
 
@@ -93,7 +93,7 @@ func tampilFilterBerdasarkanUuid (uuid string) response{
 		return response{
 			Status: false,
 			Pesan: "Gagal koneksi: "+err.Error(),
-			Data: []tamu{}
+			Data: []tamu{},
 		}
 	}
 	defer db.Close()
@@ -102,7 +102,7 @@ func tampilFilterBerdasarkanUuid (uuid string) response{
 		return response{
 			Status: false,
 			Pesan: "Query error: "+err.Error(),
-			Data: []tamu{}
+			Data: []tamu{},
 		}
 	}
 	defer dataTamu.Close()
@@ -114,7 +114,7 @@ func tampilFilterBerdasarkanUuid (uuid string) response{
 			return response{
 				Status: false,
 				Pesan: "Gagal baca data tamu dengan Uuid "+uuid+ " :"+err.Error(),
-				Data: []tamu{}
+				Data: []tamu{},
 			}
 		}
 		hasil = append(hasil, tm)
@@ -122,7 +122,7 @@ func tampilFilterBerdasarkanUuid (uuid string) response{
 	return response{
 		Status: true,
 		Pesan: "Berhasil tampilkan data tamu!",
-		Data: hasil
+		Data: hasil,
 	}
 	
 }
@@ -134,22 +134,22 @@ func tambah (uuid string, namaLengkap string, domisili string, createdAt string)
 		return response{
 			Status: false,
 			Pesan: "Gagal koneksi: "+err.Error(),
-			Data: []tamu{}
+			Data: []tamu{},
 		}
 	}
 	defer db.Close()
-	_, err := db.Query("INSERT INTO `tamu`(`uuid`, `nama_lengkap`, `domisili`, `created_at`, `updated_at`) VALUES (?,?,?,?)",uuid, namaLengkap,domisili,createdAt)
+	_, err = db.Query("INSERT INTO `tamu`(`uuid`, `nama_lengkap`, `domisili`, `created_at`, `updated_at`) VALUES (?,?,?,?)",uuid, namaLengkap,domisili,createdAt)
 	if err != nil {
 		return response{
 			Status: false,
 			Pesan: "Query insert error: "+err.Error(),
-			Data: []tamu{}
+			Data: []tamu{},
 		}
 	}
 	return response{
 		Status: true,
 		Pesan: "Berhasil tambah data tamu "+namaLengkap,
-		Data: []tamu{}
+		Data: []tamu{},
 	}
 }
 
@@ -160,22 +160,22 @@ func ubah (uuid string, namaLengkap string, domisili string, updatedAt string) r
 		return response{
 			Status: false,
 			Pesan: "Gagal koneksi: "+err.Error(),
-			Data: []tamu{}
+			Data: []tamu{},
 		}
 	}
 	defer db.Close()
-	_, err := db.Query("UPDATE `tamu` SET `nama_lengkap`=?,`domisili`=?,`updated_at`=? WHERE uuid=?", namaLengkap,domisili,updatedAt,uuid)
+	_, err = db.Query("UPDATE `tamu` SET `nama_lengkap`=?,`domisili`=?,`updated_at`=? WHERE uuid=?", namaLengkap,domisili,updatedAt,uuid)
 	if err != nil {
 		return response{
 			Status: false,
 			Pesan: "Query update error: "+err.Error(),
-			Data: []tamu{}
+			Data: []tamu{},
 		}
 	}
 	return response{
 		Status: true,
 		Pesan: "Berhasil ubah data tamu "+uuid,
-		Data: []tamu{}
+		Data: []tamu{},
 	}
 }
 
@@ -185,22 +185,22 @@ func hapus (uuid string) response{
 		return response{
 			Status: false,
 			Pesan: "Gagal koneksi: "+err.Error(),
-			Data: []tamu{}
+			Data: []tamu{},
 		}
 	}
 	defer db.Close()
-	_, err := db.Query("DELETE FROM `tamu` WHERE uuid=?", uuid)
+	_, err = db.Query("DELETE FROM `tamu` WHERE uuid=?", uuid)
 	if err != nil {
 		return response{
 			Status: false,
 			Pesan: "Query delete error: "+err.Error(),
-			Data: []tamu{}
+			Data: []tamu{},
 		}
 	}
 	return response{
 		Status: true,
 		Pesan: "Berhasil hapus data tamu "+uuid,
-		Data: []tamu{}
+		Data: []tamu{},
 	}
 }
 
@@ -208,25 +208,25 @@ func kontroler (w http.ResponseWriter, r *http.Request){
 	var tampilHtml, err1 = template.ParseFiles("template/tampil.html")
 	if err1 != nil{
 		fmt.Println(err1.Error())
-		return nil
+		return
 	}
 
 	var tambahHtml, err2 = template.ParseFiles("template/tambah.html")
 	if err2 != nil{
 		fmt.Println(err2.Error())
-		return nil
+		return
 	}
 
 	var ubahHtml, err3 = template.ParseFiles("template/ubah.html")
 	if err3 != nil{
 		fmt.Println(err3.Error())
-		return nil
+		return
 	}
 
 	var hapusHtml, err4 = template.ParseFiles("template/hapus.html")
 	if err4 != nil{
 		fmt.Println(err4.Error())
-		return nil
+		return
 	}
 
 	switch r.Method {
@@ -249,7 +249,7 @@ func kontroler (w http.ResponseWriter, r *http.Request){
 			var err = r.ParseForm()
 			if err != nil{
 				fmt.Fprint(w,"Maaf, terjadi kesalahan: ", err)
-				return nil
+				return
 			}
 			var uuid string = r.FormValue("uuid")
 			var namaLengkap string = r.FormValue("namaLengkap")
