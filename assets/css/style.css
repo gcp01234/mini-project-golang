@@ -106,7 +106,7 @@ tr:nth-child(even) {
     padding: 20px;
 }
 
-.form td input[type=text]{
+.form td input[type=text], .form td input[type=date], .form td select{
     width: 100%;
     border-style: none;
     border-radius: 5px;

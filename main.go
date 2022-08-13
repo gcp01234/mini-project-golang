@@ -27,7 +27,9 @@ func main(){
 type tamu struct{
 	Id int
 	NamaLengkap string
-	Domisili string
+	Tugas string
+	Deadline string
+	Status string
 }
 
 //struktur data respon
@@ -38,14 +40,14 @@ type response struct{
 }
 //fungsi untuk koneksi ke database mysql
 func koneksi() (*sql.DB, error){
-	db, err := sql.Open("mysql", "root:@tcp(127.0.0.1:3306)/undangan")
+	db, err := sql.Open("mysql", "root:@tcp(127.0.0.1:3306)/task_pegawai")
 	if err != nil{
 		return nil, err
 	}
 	return db, nil
 }
 
-//fungsi untuk menampilkan semua data tamu
+//fungsi untuk menampilkan semua data tugas
 func tampil (pesan string) response{
 	db, err := koneksi()
 	if err != nil {
@@ -56,7 +58,7 @@ func tampil (pesan string) response{
 		}
 	}
 	defer db.Close()
-	dataTamu, err := db.Query("SELECT id, nama_lengkap, domisili FROM `tamu`")
+	dataTask, err := db.Query("SELECT id, nama_lengkap, tugas, deadline, status FROM `task`")
 	if err != nil {
 		return response{
 			Status: false,
@@ -64,11 +66,11 @@ func tampil (pesan string) response{
 			Data: []tamu{},
 		}
 	}
-	defer dataTamu.Close()
+	defer dataTask.Close()
 	var hasil []tamu
-	for dataTamu.Next(){
+	for dataTask.Next(){
 		var tm = tamu{}
-		var err = dataTamu.Scan(&tm.Id,&tm.NamaLengkap,&tm.Domisili)
+		var err = dataTask.Scan(&tm.Id,&tm.NamaLengkap,&tm.Tugas,&tm.Deadline,&tm.Status)
 		if err != nil {
 			return response{
 				Status: false,
@@ -86,7 +88,7 @@ func tampil (pesan string) response{
 }
 
 
-//fungsi untuk menampilkan data tamu berdasarkan Id
+//fungsi untuk menampilkan data tugas berdasarkan Id
 func tampilFilterBerdasarkanId (id int) response{
 	db, err := koneksi()
 	if err != nil {
@@ -97,7 +99,7 @@ func tampilFilterBerdasarkanId (id int) response{
 		}
 	}
 	defer db.Close()
-	dataTamu, err := db.Query("SELECT id, nama_lengkap, domisili FROM `tamu` WHERE id=?",id)
+	dataTask, err := db.Query("SELECT id, nama_lengkap, tugas, deadline, status FROM `task` WHERE id=?",id)
 	if err != nil {
 		return response{
 			Status: false,
@@ -105,15 +107,15 @@ func tampilFilterBerdasarkanId (id int) response{
 			Data: []tamu{},
 		}
 	}
-	defer dataTamu.Close()
+	defer dataTask.Close()
 	var hasil []tamu
-	for dataTamu.Next(){
+	for dataTask.Next(){
 		var tm = tamu{}
-		var err = dataTamu.Scan(&tm.Id,&tm.NamaLengkap,&tm.Domisili)
+		var err = dataTask.Scan(&tm.Id,&tm.NamaLengkap,&tm.Tugas,&tm.Deadline,&tm.Status)
 		if err != nil {
 			return response{
 				Status: false,
-				Pesan: "Gagal baca data tamu dengan Id "+string(id)+ " :"+err.Error(),
+				Pesan: "Gagal baca data tugas dengan Id "+string(id)+ " :"+err.Error(),
 				Data: []tamu{},
 			}
 		}
@@ -121,14 +123,14 @@ func tampilFilterBerdasarkanId (id int) response{
 	}
 	return response{
 		Status: true,
-		Pesan: "Berhasil tampilkan data tamu!",
+		Pesan: "Berhasil tampilkan data tugas!",
 		Data: hasil,
 	}
 	
 }
 
-//fungsi untuk menambahkan data tamu
-func tambah (namaLengkap string, domisili string) response{
+//fungsi untuk menambahkan data tugas
+func tambah (namaLengkap string, tugas string, deadline string, status string) response{
 	db, err := koneksi()
 	if err != nil {
 		return response{
@@ -138,7 +140,7 @@ func tambah (namaLengkap string, domisili string) response{
 		}
 	}
 	defer db.Close()
-	_, err = db.Query("INSERT INTO `tamu`( `nama_lengkap`, `domisili`) VALUES (?,?)", namaLengkap,domisili)
+	_, err = db.Query("INSERT INTO `task`( `nama_lengkap`, `tugas`, `deadline`, `status`) VALUES (?,?,?,?)", namaLengkap,tugas,deadline,status)
 	if err != nil {
 		return response{
 			Status: false,
@@ -148,13 +150,13 @@ func tambah (namaLengkap string, domisili string) response{
 	}
 	return response{
 		Status: true,
-		Pesan: "Berhasil tambah data tamu "+namaLengkap,
+		Pesan: "Berhasil tambah data tugas "+namaLengkap,
 		Data: []tamu{},
 	}
 }
 
-//fungsi untuk mengubah data tamu
-func ubah (id int, namaLengkap string, domisili string) response{
+//fungsi untuk mengubah data tugas
+func ubah (id int, namaLengkap string, tugas string, deadline string, status string) response{
 	db, err := koneksi()
 	if err != nil {
 		return response{
@@ -164,7 +166,7 @@ func ubah (id int, namaLengkap string, domisili string) response{
 		}
 	}
 	defer db.Close()
-	_, err = db.Query("UPDATE `tamu` SET `nama_lengkap`=?,`domisili`=? WHERE id=?", namaLengkap,domisili,id)
+	_, err = db.Query("UPDATE `task` SET `nama_lengkap`=?,`tugas`=?,`deadline`=?,`status`=? WHERE id=?", namaLengkap,tugas,deadline,status,id)
 	if err != nil {
 		return response{
 			Status: false,
@@ -174,7 +176,7 @@ func ubah (id int, namaLengkap string, domisili string) response{
 	}
 	return response{
 		Status: true,
-		Pesan: "Berhasil ubah data tamu "+string(id),
+		Pesan: "Berhasil ubah data tugas "+string(id),
 		Data: []tamu{},
 	}
 }
@@ -189,7 +191,7 @@ func hapus (id int) response{
 		}
 	}
 	defer db.Close()
-	_, err = db.Query("DELETE FROM `tamu` WHERE id=?", id)
+	_, err = db.Query("DELETE FROM `task` WHERE id=?", id)
 	if err != nil {
 		return response{
 			Status: false,
@@ -199,7 +201,7 @@ func hapus (id int) response{
 	}
 	return response{
 		Status: true,
-		Pesan: "Berhasil hapus data tamu.",
+		Pesan: "Berhasil hapus data tugas.",
 		Data: []tamu{},
 	}
 }
@@ -256,13 +258,15 @@ func kontroler (w http.ResponseWriter, r *http.Request){
 			var id string = r.FormValue("id")
 			i,_ := strconv.Atoi(id)
 			var namaLengkap string = r.FormValue("namaLengkap")
-			var domisili string = r.FormValue("domisili")
+			var tugas string = r.FormValue("tugas")
+			var deadline string = r.FormValue("deadline")
+			var status string = r.FormValue("status")
 			var aksi = r.URL.Path
 			if aksi == "/tambah"{
-				var hasil = tambah(namaLengkap,domisili)
+				var hasil = tambah(namaLengkap,tugas,deadline,status)
 				tampilHtml.Execute(w, tampil(hasil.Pesan))
 			} else if aksi == "/ubah" {
-				var hasil = ubah(i,namaLengkap,domisili)
+				var hasil = ubah(i,namaLengkap,tugas,deadline,status)
 				tampilHtml.Execute(w, tampil(hasil.Pesan))
 			}else if aksi == "/hapus" {
 				var hasil = hapus(i)

@@ -1,10 +1,10 @@
 <html>
     <head>
-        <title>Daftar Tamu Undangan</title>
+        <title>Daftar Tugas Pegawai</title>
         <link rel="stylesheet" href="assets/css/style.css">
     </head>
     <body>
-        <h1>Daftar Hadir Tamu Undangan</h1>
+        <h1>Daftar Tugas Pegawai</h1>
         <div class="alert">
             <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
             <img src="assets/img/info.png"> {{.Pesan}}
@@ -15,16 +15,20 @@
                 <tr>
                     <th>Id</th>
                     <th>Nama Lengkap</th>
-                    <th>Domisili</th>
+                    <th>Tugas</th>
+                    <th>Deadline</th>
+                    <th>Status</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
             <tbody>
                 {{ range $key, $value := .Data}}
                 <tr>
-                    <td class="center" style="width: 10%;">{{$value.Id}}</td>
-                    <td style="width: 35%;">{{$value.NamaLengkap}}</td>
-                    <td style="width: 30%;">{{$value.Domisili}}</td>
+                    <td class="center" style="width: 2%;">{{$value.Id}}</td>
+                    <td style="width: 20%;">{{$value.NamaLengkap}}</td>
+                    <td style="width: 30%;">{{$value.Tugas}}</td>
+                    <td style="width: 15%;">{{$value.Deadline}}</td>
+                    <td style="width: 8%;">{{$value.Status}}</td>
                     <td class="center" style="width: 25%;">
                         <a class="btn delete" href="/?aksi=hapus&id={{$value.Id}}"><img src="assets/img/delete.png"> Hapus</a>
                         <a class="btn edit" href="/?aksi=ubah&id={{$value.Id}}"><img src="assets/img/edit.png"> Ubah</a>
@@ -34,9 +38,11 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <th>No</th>
+                    <th>Id</th>
                     <th>Nama Lengkap</th>
-                    <th>Domisili</th>
+                    <th>Tugas</th>
+                    <th>Deadline</th>
+                    <th>Status</th>
                     <th>Aksi</th>
                 </tr>
             </tfoot>

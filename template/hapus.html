@@ -1,10 +1,10 @@
 <html>
     <head>
-        <title>Detail Data Tamu Undangan</title>
+        <title>Detail Tugas Pegawai</title>
         <link rel="stylesheet" href="assets/css/style.css">
     </head>
     <body>
-        <h1>Detail Data Tamu Undangan</h1>
+        <h1>Detail Tugas Pegawai</h1>
         <form method="POST" action="/hapus">
             <table class="form">
                 <tbody>
@@ -19,9 +19,19 @@
                         <td><input type="text" name="namaLengkap" value="{{ ( index .Data 0 ).NamaLengkap }}" readonly="readonly"></td>
                     </tr>
                     <tr>
-                        <td>Domisili</td>
+                        <td>Tugas</td>
                         <td style="width: 5%;">:</td>
-                        <td><input type="text" name="domisili" value="{{ ( index .Data 0 ).Domisili }}" readonly="readonly"></td>
+                        <td><input type="text" name="tugas" value="{{ ( index .Data 0 ).Tugas }}" readonly="readonly"></td>
+                    </tr>
+                    <tr>
+                        <td>Deadline</td>
+                        <td style="width: 5%;">:</td>
+                        <td><input type="text" name="deadline" value="{{ ( index .Data 0 ).Deadline }}" readonly="readonly"></td>
+                    </tr>
+                    <tr>
+                        <td>Status</td>
+                        <td style="width: 5%;">:</td>
+                        <td><input type="text" name="status" value="{{ ( index .Data 0 ).Status }}" readonly="readonly"></td>
                     </tr>
                     <tr>
                         <td colspan="3">

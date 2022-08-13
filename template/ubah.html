@@ -1,10 +1,10 @@
 <html>
     <head>
-        <title>Ubah Data Tamu Undangan</title>
+        <title>Ubah Data Tugas Pegawai</title>
         <link rel="stylesheet" href="assets/css/style.css">
     </head>
     <body>
-        <h1>Form Ubah Data Tamu</h1>
+        <h1>Ubah Data Tugas Pegawai</h1>
         <form method="POST" action="/ubah">
             <table class="form">
                 <tbody>
@@ -19,9 +19,27 @@
                         <td><input type="text" name="namaLengkap" value="{{ (index .Data 0).NamaLengkap }}" ></td>
                     </tr>
                     <tr>
-                        <td>Domisili</td>
+                        <td>Tugas</td>
                         <td  style="width: 5%;">:</td>
-                        <td><input type="text" name="domisili" value="{{ (index .Data 0).Domisili }}" ></td>
+                        <td><input type="text" name="tugas" value="{{ (index .Data 0).Tugas }}" ></td>
+                    </tr>
+                    <tr>
+                        <td>Deadline</td>
+                        <td  style="width: 5%;">:</td>
+                        <td><input type="date" name="deadline" value="{{ (index .Data 0).Deadline }}" ></td>
+                    </tr>
+                    <tr>
+                        <td>Status</td>
+                        <td style="width: 5%;">:</td>
+                        <td>
+                            <select name="status">
+                                <option value="Ditugaskan" {{ if eq (index .Data 0).Status "Ditugaskan" }}selected="selected"{{ end }}>Ditugaskan</option>
+                                <option value="Dalam Proses"  {{ if eq (index .Data 0).Status "Dalam Proses" }}selected="selected"{{ end }}>Dalam Proses</option>
+                                <option value="Selesai"  {{ if eq (index .Data 0).Status "Selesai" }}selected="selected"{{ end }}>Selesai</option>
+                                <option value="Ditunda"  {{ if eq (index .Data 0).Status "Ditunda" }}selected="selected"{{ end }}>Ditunda</option>
+                                <option value="Dibatalkan"  {{ if eq (index .Data 0).Status "Dibatalkan" }}selected="selected"{{ end }}>Dibatalkan</option>
+                            </select>
+                        </td>
                     </tr>
                     <tr>
                         <td colspan="3">

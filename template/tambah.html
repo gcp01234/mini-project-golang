@@ -1,10 +1,10 @@
 <html>
     <head>
-        <title>Tambah Data Tamu Undangan</title>
+        <title>Tambah Data Tugas Pegawai</title>
         <link rel="stylesheet" href="assets/css/style.css">
     </head>
     <body>
-        <h1>Tambah Data Tamu Undangan</h1>
+        <h1>Tambah Data Tugas Pegawai</h1>
         <form method="POST" action="/tambah">
             <table class="form">
                 <tbody>
@@ -14,9 +14,27 @@
                         <td><input type="text" name="namaLengkap"></td>
                     </tr>
                     <tr>
-                        <td>Domisili</td>
+                        <td>Tugas</td>
                         <td style="width: 5%;">:</td>
-                        <td><input type="text" name="domisili"></td>
+                        <td><input type="text" name="tugas"></td>
+                    </tr>
+                    <tr>
+                        <td>Deadline</td>
+                        <td style="width: 5%;">:</td>
+                        <td><input type="date" name="deadline"></td>
+                    </tr>
+                    <tr>
+                        <td>Status</td>
+                        <td style="width: 5%;">:</td>
+                        <td>
+                            <select name="status">
+                                <option value="Ditugaskan">Ditugaskan</option>
+                                <option value="Dalam Proses">Dalam Proses</option>
+                                <option value="Selesai">Selesai</option>
+                                <option value="Ditunda">Ditunda</option>
+                                <option value="Dibatalkan">Dibatalkan</option>
+                            </select>
+                        </td>
                     </tr>
                     <tr>
                         <td colspan="3">

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 13, 2022 at 10:17 PM
+-- Generation Time: Aug 13, 2022 at 11:51 PM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 7.4.16
 
@@ -18,37 +18,39 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `undangan`
+-- Database: `task_pegawai`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tamu`
+-- Table structure for table `task`
 --
 
-CREATE TABLE `tamu` (
+CREATE TABLE `task` (
   `id` int(11) NOT NULL,
   `nama_lengkap` text NOT NULL,
-  `domisili` text NOT NULL
+  `tugas` text NOT NULL,
+  `deadline` date NOT NULL,
+  `status` enum('Ditugaskan','Dalam Proses','Selesai','Ditunda','Dibatalkan') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `tamu`
+-- Dumping data for table `task`
 --
 
-INSERT INTO `tamu` (`id`, `nama_lengkap`, `domisili`) VALUES
-(1, 'Bunga Citra Lestari', 'Jakarta Utara'),
-(2, 'Nicholas Saputra', 'Bekasi');
+INSERT INTO `task` (`id`, `nama_lengkap`, `tugas`, `deadline`, `status`) VALUES
+(1, 'Bunga Citra Lestari', 'Menyanyi 1 lagu', '2022-07-31', 'Selesai'),
+(2, 'Gita Citra Puspita', 'Mengerjakan tugas progate', '2022-08-12', 'Selesai');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `tamu`
+-- Indexes for table `task`
 --
-ALTER TABLE `tamu`
+ALTER TABLE `task`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -56,9 +58,9 @@ ALTER TABLE `tamu`
 --
 
 --
--- AUTO_INCREMENT for table `tamu`
+-- AUTO_INCREMENT for table `task`
 --
-ALTER TABLE `tamu`
+ALTER TABLE `task`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
