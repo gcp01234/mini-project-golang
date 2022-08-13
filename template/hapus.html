@@ -1,9 +1,9 @@
 <html>
     <body>
-        <h1>Form Ubah Data Tamu</h1>
+        <h1>Detail Data Tamu</h1>
         <a href="/"> Batal </a>
         <hr>
-        <form method="POST" action="/ubah">
+        <form method="POST" action="/hapus">
             <table>
                 <tbody>
                     <tr>
@@ -14,15 +14,15 @@
                     <tr>
                         <td>Nama Lengkap</td>
                         <td>:</td>
-                        <td><input type="text" name="namaLengkap" value="{{ ( index .Data 0 ).NamaLengkap }}" ></td>
+                        <td><input type="text" name="namaLengkap" value="{{ ( index .Data 0 ).NamaLengkap }}" readonly="readonly"></td>
                     </tr>
                     <tr>
                         <td>Domisili</td>
                         <td>:</td>
-                        <td><input type="text" name="domisili" value="{{ ( index .Data 0 ).Domisili }}" ></td>
+                        <td><input type="text" name="domisili" value="{{ ( index .Data 0 ).Domisili }}" readonly="readonly"></td>
                     </tr>
                     <tr>
-                        <td colspan="3"><input type="submit" value="Ubah"></td>
+                        <td colspan="3"><input type="submit" value="Hapus"></td>
                     </tr>
                 </tbody>
             </table>
