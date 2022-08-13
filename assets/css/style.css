@@ -37,6 +37,7 @@ th {
     background-color: #F48FB1;
     text-align: center;
 }
+
 tr:nth-child(even) {
     background-color: #F8BBD0;
 }
@@ -48,6 +49,7 @@ tr:nth-child(even) {
     border-radius: 10px;
     float: right;
     color: #FCE4EC;
+    border-style: none;
 }
 
 .add{
@@ -90,4 +92,24 @@ tr:nth-child(even) {
 
 .closebtn:hover {
     color: #880E4F;
+}
+
+.form{
+    width: 50%;
+    margin: 20px auto;
+    border-radius: 5px;
+    background-color: #F8BBD0;
+    border-style: none;
+}
+
+.form td{
+    padding: 20px;
+}
+
+.form td input[type=text]{
+    width: 100%;
+    border-style: none;
+    border-radius: 5px;
+    padding: 5px;
+
 }

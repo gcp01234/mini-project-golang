@@ -5,24 +5,25 @@
         <link rel="stylesheet" href="assets/css/responsive.css">
     </head>
     <body>
-        <h1>Form Tambah Data Tamu</h1>
-        <a href="/"> Batal </a>
-        <hr>
+        <h1>Tambah Data Tamu Undangan</h1>
         <form method="POST" action="/tambah">
-            <table>
+            <table class="form">
                 <tbody>
                     <tr>
                         <td>Nama Lengkap</td>
-                        <td>:</td>
+                        <td style="width: 5%;">:</td>
                         <td><input type="text" name="namaLengkap"></td>
                     </tr>
                     <tr>
                         <td>Domisili</td>
-                        <td>:</td>
+                        <td style="width: 5%;">:</td>
                         <td><input type="text" name="domisili"></td>
                     </tr>
                     <tr>
-                        <td colspan="3"><input type="submit" value="Tambah"></td>
+                        <td colspan="3">
+                            <input class="btn delete" type="submit" value="Simpan">
+                            <a class="btn edit" href="/"> Batal </a>
+                        </td>
                     </tr>
                 </tbody>
             </table>

@@ -6,28 +6,29 @@
     </head>
     <body>
         <h1>Form Ubah Data Tamu</h1>
-        <a class="btn add" href="/"> Batal </a>
-        <hr>
         <form method="POST" action="/ubah">
-            <table>
+            <table class="form">
                 <tbody>
                     <tr>
                         <td>Id</td>
-                        <td>:</td>
+                        <td  style="width: 5%;">:</td>
                         <td><input type="text" name="id" value="{{ (index .Data 0).Id }}" readonly="readonly"></td>
                     </tr>
                     <tr>
                         <td>Nama Lengkap</td>
-                        <td>:</td>
+                        <td  style="width: 5%;">:</td>
                         <td><input type="text" name="namaLengkap" value="{{ (index .Data 0).NamaLengkap }}" ></td>
                     </tr>
                     <tr>
                         <td>Domisili</td>
-                        <td>:</td>
+                        <td  style="width: 5%;">:</td>
                         <td><input type="text" name="domisili" value="{{ (index .Data 0).Domisili }}" ></td>
                     </tr>
                     <tr>
-                        <td colspan="3"><input type="submit" value="Ubah"></td>
+                        <td colspan="3">
+                            <input class="btn delete" type="submit" value="Ubah">
+                            <a class="btn edit" href="/"> Batal </a>
+                        </td>
                     </tr>
                 </tbody>
             </table>
