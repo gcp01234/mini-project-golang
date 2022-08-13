@@ -9,17 +9,17 @@
                     <tr>
                         <td>Id</td>
                         <td>:</td>
-                        <td><input type="text" name="id" value="{{ ( index .Data 0 ).Id }}" readonly="readonly"></td>
+                        <td><input type="text" name="id" value="{{ (index .Data 0).Id }}" readonly="readonly"></td>
                     </tr>
                     <tr>
                         <td>Nama Lengkap</td>
                         <td>:</td>
-                        <td><input type="text" name="namaLengkap" value="{{ ( index .Data 0 ).NamaLengkap }}" ></td>
+                        <td><input type="text" name="namaLengkap" value="{{ (index .Data 0).NamaLengkap }}" ></td>
                     </tr>
                     <tr>
                         <td>Domisili</td>
                         <td>:</td>
-                        <td><input type="text" name="domisili" value="{{ ( index .Data 0 ).Domisili }}" ></td>
+                        <td><input type="text" name="domisili" value="{{ (index .Data 0).Domisili }}" ></td>
                     </tr>
                     <tr>
                         <td colspan="3"><input type="submit" value="Ubah"></td>

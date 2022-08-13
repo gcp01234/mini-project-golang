@@ -95,7 +95,7 @@ func tampilFilterBerdasarkanId (id int) response{
 		}
 	}
 	defer db.Close()
-	dataTamu, err := db.Query("SELECT id, nama_lengkap, domisili FROM `tamu` WHERE Uuid=?",id)
+	dataTamu, err := db.Query("SELECT id, nama_lengkap, domisili FROM `tamu` WHERE id=?",id)
 	if err != nil {
 		return response{
 			Status: false,
