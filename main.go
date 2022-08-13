@@ -199,7 +199,7 @@ func hapus (id int) response{
 	}
 	return response{
 		Status: true,
-		Pesan: "Berhasil hapus data tamu "+string(id),
+		Pesan: "Berhasil hapus data tamu.",
 		Data: []tamu{},
 	}
 }
