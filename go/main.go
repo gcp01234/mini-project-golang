@@ -245,10 +245,30 @@ func kontroler (w http.ResponseWriter, r *http.Request){
 				tampilHtml.Execute(w, tampil("Berhasil tampilkan semua data!"))
 			}
 		case "POST":
-			
+			var err = r.ParseForm()
+			if err != nil{
+				fmt.Fprint(w,"Maaf, terjadi kesalahan: ", err)
+				return nil
+			}
+			var uuid string = r.FormValue("uuid")
+			var namaLengkap string = r.FormValue("namaLengkap")
+			var domisili string = r.FormValue("domisili")
+			var updateAt string = "2022-08-01 00:00:00"
+			var createdAt string = "2022-08-01 00:00:00"
+			var aksi = r.URL.Path
+			if aksi == "/tambah"{
+				var hasil = tambah(uuid,namaLengkap,domisili,createdAt)
+				tampilHtml.Execute(w, tampil(hasil.Pesan))
+			} else if aksi == "/ubah" {
+				var hasil = ubah(uuid,namaLengkap,domisili,updateAt)
+				tampilHtml.Execute(w, tampil(hasil.Pesan))
+			}else if aksi == "/hapus" {
+				var hasil = hapus(uuid)
+				tampilHtml.Execute(w, tampil(hasil.Pesan))
+			}else{
+				tampilHtml.Execute(w, tampil("Berhasil tampilkan semua data!"))
+			}
 		default:
 			fmt.Fprint(w,"Maaf, Method yang di dukung hanya GET dan POST!")
 	}
-
-
 }
