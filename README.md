@@ -1,5 +1,5 @@
 Nama Proyek: Mini Project Golang <br>
-Pembuat: Gita Citra Puspita <br>
+Pembuat: gcp01234 <br>
 Deksripsi: Tugas ini dibuat untuk memenuhi kewajiban dalam mengikuti pelatihan PROA Digitalent Kelas Golang
 
 # Struktur Proyek
